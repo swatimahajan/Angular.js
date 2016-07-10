@@ -1,9 +1,21 @@
 (function(){
-<!-- //-->
 	var app = angular.module("store",[]);
 
 	app.controller("StoreController" , function(){
 		this.products = gems;
+
+	});
+	
+	app.controller("PanelController" , function(){
+		this.tab = 1;
+
+		this.selectTab = function(setTab){
+			this.tab = setTab;
+
+		};
+		this.isSelected = function(checkTab){
+			return this.tab === checkTab;
+		};
 
 	});
 	var gems = [
@@ -21,14 +33,27 @@
           	full:"img2.jpg"
           },
         ]*/
+        reviews: [
+        {
+            stars:5,
+            body:"I love this product.",
+            author:"john@gmail.com",
+        },
+        {
+ 			stars:1,
+            body:"I hate this product.",
+            author:"john@yahoo.com",
+        }
+       ]
         },
 	{
 	    name : 'Pentagonal Gem',
 		price: '123',
-		description : 'origin of the pentagonal is ukown, hence its low value. it has very high shine and 12 sides.',
+		description : 'origin of the pentagonal is known, hence its low value. it has very high shine and 12 sides.',
         canPurchase: false,
         SoldOut: false,
     }
 	];
+	
  
 })();
