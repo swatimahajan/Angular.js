@@ -4,7 +4,6 @@
 <html ng-app="store">
 <head>
    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-  
    <link rel="stylesheet" type="text/css" href="css_file.css">
 <title>Learning website</title>
 </head>
@@ -13,61 +12,84 @@
 
 <!--<div class = "box-set">
   <div class = "box"> Div A</div>
-	<div class = "box" > Div B </div>
-	<div class = "box"> Div C </div>
-	</div>-->
+  <div class = "box" > Div B </div>
+  <div class = "box"> Div C </div>
+  </div>-->
 
 <!-- ng-controller is a direcive which displays data on html page
      StoreController is the name of the controller
      store is an alias for StoreController and use inside our expression 
      scope of the controller is only inside that div-->
 <!--<div ng-controller = "StoreController as store">-->
-<div   ng-hide = "store.product.SoldOut ">
+  <div   ng-hide = "store.product.SoldOut ">
   <!--ng-repeat directve to repeat multiple items in the store , it is just like a for loop-->
-  <ul class="list-group" >
-    <li class= "list-group-item" ng-repeat="product in store.products">
-  <h3>{{product.name}}</h3>
-  <em>{{product.price | currency }}</em>
+      <ul class="list-group" >
+        <li class= "list-group-item" ng-repeat="product in store.products">
+          <h3>{{product.name}}</h3>
+            <em>{{product.price | currency }}</em>
   <!-- ng-init directive to set initial value for tab, so it is set to description i.e tab =1 -->
-  <section ng-init="tab=1">
+    <section ng-controller= "PanelController as panel" ><!--ng-init="tab=1"-->
       <ul class="nav nav-pills">
         <!--to highlight which tab is active a ng-class = active is used-->
-        <li ng-class="{ active:tab === 1 }" >
-          <a href ng-click="tab = 1">Description</a>
+        <li ng-class="{ active:panel.isSelected(1)}" >
+          <a href ng-click="panel.selectTab(1) " >Description</a>
         </li>
-        <li ng-class="{active: tab === 2}">
-          <a href ng-click="tab = 2">Specifications</a>
+
+        <li ng-class="{active: panel.isSelected(2)}">
+          <a href ng-click="panel.selectTab(2)">Specifications</a>
         </li>
-        <li ng-class="{active: tab === 3}">
-          <a href ng-click="tab = 3">Reviews</a>
+
+        <li ng-class="{active: panel.isSelected(3)}">
+          <a href ng-click="panel.selectTab(3)">Reviews</a>
         </li>
       </ul> 
+
     <!--ng-show displays the value of the current tab that is selected-->
-     <div class= 'panel' ng-show="tab == 1">
+    <div class= 'panel' ng-show="panel.isSelected(1)">
       <h4>Description</h4>
-  <p>{{product.description | uppercase}}</p>
-   </div>
+        <p>{{product.description | uppercase}}</p>
+    </div>
     
-     <div class= 'panel' ng-show="tab == 2">
+    <div class= 'panel' ng-show="panel.isSelected(2)">
       <blockquote>Specifications</blockquote>
-  <p>Not yet</p>
-   </div>
+          <p>Not yet</p>
+    </div>
      
-     <div class= 'panel' ng-show="tab == 3">
-      <blockquote>Reviews</blockquote>
-  <p>Not yet</p>
-   </div>
+    <div class= 'panel' ng-show="panel.isSelected(3)">
+      <h4>Reviews</h4>
+        <!--p>Not yet</p-->
+        <blockquote ng-repeat="review in product.reviews">
+          <b>Stars: {{review.stars}}</b>
+          {{review.body}}
+          <br><cite>by: {{review.author}}</cite>
+        </blockquote>
+
+      <form name="reviewform">
+        <select>
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select><br>
+        <textarea></textarea><br>
+        <label>by:</label>
+        <input type = "email"/><br>
+        <input type = "submit" value ="Submit"/>
+      </form>
+    </div>
+
     </section>
-  <img ng-src='{{product.images[0].full}}'>
+      <img ng-src='{{product.images[0].full}}'>
   <!--ng-show = "" shows #add to cart# button only when canPurchase value is True-->
-  <button ng-show="store.product.canPurchase">Add to Cart</button>
-</li>
-</ul>
+      <button ng-show="store.product.canPurchase">Add to Cart</button>
+        </li>
+      </ul>
 </div>
  
-    <script type="text/javascript" src="angular.min.js"></script>
-   <script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
 
-   <footer>footer</footer>
+  <footer>footer</footer>
 </body>
 </html>
